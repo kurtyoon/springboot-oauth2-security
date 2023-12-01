@@ -1,0 +1,5 @@
+spring.profiles.default: local
+
+---
+
+spring.config.activate.on-profile: local
