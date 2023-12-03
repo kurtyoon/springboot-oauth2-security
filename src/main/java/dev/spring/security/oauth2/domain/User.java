@@ -5,9 +5,11 @@ import dev.spring.security.oauth2.type.EUserType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
