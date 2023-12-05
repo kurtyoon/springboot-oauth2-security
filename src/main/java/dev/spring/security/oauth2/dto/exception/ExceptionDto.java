@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class ExceptionDto {
-    private final String code;
+    private final Integer code;
     private final String message;
 
     /**
@@ -24,5 +24,9 @@ public class ExceptionDto {
     public ExceptionDto(Exception e) {
         this.code = ErrorCode.INTERNAL_SERVER_ERROR.getCode();
         this.message = e.getMessage();
+    }
+
+    public static ExceptionDto of(ErrorCode errorCode) {
+        return new ExceptionDto(errorCode);
     }
 }
