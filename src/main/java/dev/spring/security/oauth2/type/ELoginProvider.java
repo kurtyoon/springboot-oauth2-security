@@ -6,5 +6,20 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ELoginProvider {
-    KAKAO, GOOGLE
+    DEFAULT("DEFAULT"),
+    GOOGLE("GOOGLE"),
+    NAVER("NAVER"),
+    KAKAO("KAKAO"),
+    FACEBOOK("FACEBOOK"),
+    TWITTER("TWITTER"),
+    GITHUB("GITHUB"),
+    LINE("LINE"),
+    APPLE("APPLE");
+
+    private final String name;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

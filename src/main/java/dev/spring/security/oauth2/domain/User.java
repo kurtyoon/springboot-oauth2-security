@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -20,6 +22,9 @@ public class User {
     @Column(name = "social_id", unique = true)
     private String socialId;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "user_type")
     @Enumerated(EnumType.STRING)
     private EUserType userType;
@@ -28,6 +33,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ELoginProvider provider;
 
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
     @Column(name = "refresh_token")
     private String refreshToken;
 
@@ -35,10 +43,12 @@ public class User {
     private boolean isLogin;
 
     @Builder
-    public User(String socialId, EUserType userType, ELoginProvider provider) {
+    public User(String socialId, String password, EUserType userType, ELoginProvider provider) {
         this.socialId = socialId;
+        this.password = password;
         this.userType = userType;
         this.provider = provider;
+        this.createdAt = LocalDate.now();
         this.refreshToken = null;
         this.isLogin = false;
     }
