@@ -1,5 +1,6 @@
 package dev.spring.security.oauth2.domain;
 
+import dev.spring.security.oauth2.dto.auth.AuthSignUpDto;
 import dev.spring.security.oauth2.type.ELoginProvider;
 import dev.spring.security.oauth2.type.EUserType;
 import jakarta.persistence.*;
@@ -51,6 +52,23 @@ public class User {
         this.createdAt = LocalDate.now();
         this.refreshToken = null;
         this.isLogin = false;
+    }
+
+    public void register() {
+        this.userType = EUserType.AGENCY;
+    }
+
+    public static User signUp(AuthSignUpDto authSignUpDto, String encodedPassword) {
+        User user = User.builder()
+                .socialId(authSignUpDto.socialId())
+                .password(encodedPassword)
+                .provider(ELoginProvider.DEFAULT)
+                .userType(EUserType.AGENCY)
+                .build();
+
+        user.register();
+
+        return user;
     }
 
     public void updateRefreshToken(String refreshToken) {
