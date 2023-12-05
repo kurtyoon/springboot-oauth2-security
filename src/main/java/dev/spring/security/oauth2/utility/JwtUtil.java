@@ -9,6 +9,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public class JwtUtil implements InitializingBean {
     @Value("${security.jwt.access.expiration}")
     private Integer accessTokenExpiration;
     @Value("${security.jwt.refresh.expiration}")
+    @Getter
     private Integer refreshTokenExpiration;
     private Key key;
 
