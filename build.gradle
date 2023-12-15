@@ -39,6 +39,12 @@ dependencies {
 	// json
 	implementation 'com.google.code.gson:gson'
 
+	// mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 	// validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
