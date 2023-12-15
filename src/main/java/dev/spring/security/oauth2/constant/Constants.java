@@ -3,10 +3,11 @@ package dev.spring.security.oauth2.constant;
 import java.util.List;
 
 public class Constants {
-    public static String USER_ID_CLAIM_NAME = "uid";
-    public static String USER_TYPE_CLAIM_NAME = "utp";
+    public static String SOCIAL_ID_CLAIM_NAME = "socialId";
+    public static String USER_TYPE_CLAIM_NAME = "userType";
     public static String BEARER_PREFIX = "Bearer ";
     public static String AUTHORIZATION = "Authorization";
+    public static String REAUTHORIZATION = "Reauthorization";
 
     public static List<String> NO_AUTH_WHITE_LABEL = List.of(
             "/swagger-ui/index.html",
@@ -19,9 +20,12 @@ public class Constants {
             "/v3/api-docs/public-api",
             "/swagger-ui/favicon-32x32.png",
             "/api/v1/swagger-ui/index.html",
-            "/guest/**",
-            "/auth/sign-up",
-            "/auth/sign-in",
-            "/REDIRECT_URL"
+            "/api/oauth2/google",
+            "/api/oauth2/google/callback",
+            "/api/oauth2/refresh",
+            "/api/auth/sign-up",
+            "/api/auth/login",
+            "/api/auth/refresh",
+            "/api/auth/mail"
     );
 }
