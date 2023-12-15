@@ -16,15 +16,24 @@ import java.time.LocalDate;
 @Table(name = "users")
 public class User {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
-    @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
     private Long id;
 
     @Column(name = "social_id", unique = true)
     private String socialId;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "agency", nullable = true)
+    private String agency;
 
     @Column(name = "user_type")
     @Enumerated(EnumType.STRING)

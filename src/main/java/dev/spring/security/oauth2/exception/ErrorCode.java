@@ -23,11 +23,15 @@ public enum ErrorCode {
      * 403: Forbidden
      */
     FORBIDDEN_ERROR(403, HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
+    ACCESS_DENIED(403, HttpStatus.FORBIDDEN, "접근이 거부되었습니다."),
+    NOT_MATCHED_USER(403, HttpStatus.FORBIDDEN, "일치하는 사용자가 없습니다."),
 
     /**
      * 404: Not Found
      */
     NOT_FOUND_ERROR(404, HttpStatus.NOT_FOUND, "요청하신 페이지를 찾을 수 없습니다."),
+    NOT_FOUND_USER(404, HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
+    NOT_MATCHED_CODE(404, HttpStatus.NOT_FOUND, "일치하는 코드가 없습니다."),
 
     /**
      * 405: Method Not Allowed
