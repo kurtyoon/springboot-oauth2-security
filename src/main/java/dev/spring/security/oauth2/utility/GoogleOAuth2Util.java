@@ -3,6 +3,7 @@ package dev.spring.security.oauth2.utility;
 import com.nimbusds.jose.shaded.gson.JsonElement;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class GoogleOAuth2Util {
     /**
@@ -57,7 +59,6 @@ public class GoogleOAuth2Util {
                 googleTokenRequest,
                 String.class
         );
-
         return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
     }
 
@@ -77,6 +78,6 @@ public class GoogleOAuth2Util {
         );
 
         JsonElement element = JsonParser.parseString(response.getBody());
-        return element.getAsJsonObject().get("id").getAsString();
+        return element.getAsJsonObject().get("sub").getAsString();
     }
 }
