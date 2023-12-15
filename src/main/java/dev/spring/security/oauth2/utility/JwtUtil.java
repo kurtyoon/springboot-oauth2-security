@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
+@Getter
 @Component
 public class JwtUtil implements InitializingBean {
     @Value("${security.jwt.secret}")
@@ -24,7 +25,6 @@ public class JwtUtil implements InitializingBean {
     @Value("${security.jwt.access.expiration}")
     private Integer accessTokenExpiration;
     @Value("${security.jwt.refresh.expiration}")
-    @Getter
     private Integer refreshTokenExpiration;
     private Key key;
 
@@ -34,10 +34,10 @@ public class JwtUtil implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public JwtTokenDto generateTokens(Long id, EUserType userType) {
+    public JwtTokenDto generateTokens(String socialId, EUserType userType) {
         return new JwtTokenDto(
-                generateToken(id, userType, accessTokenExpiration * 1000),
-                generateToken(id, userType, refreshTokenExpiration * 1000)
+                generateToken(socialId, userType, accessTokenExpiration * 1000),
+                generateToken(socialId, userType, refreshTokenExpiration * 1000)
         );
     }
 
@@ -49,9 +49,9 @@ public class JwtUtil implements InitializingBean {
                 .getBody();
     }
 
-    private String generateToken(Long id, EUserType userType, Integer expiration) {
+    private String generateToken(String socialId, EUserType userType, Integer expiration) {
         Claims claims = Jwts.claims();
-        claims.put(Constants.USER_ID_CLAIM_NAME, id);
+        claims.put(Constants.SOCIAL_ID_CLAIM_NAME, socialId);
         if (userType != null) {
             claims.put(Constants.USER_TYPE_CLAIM_NAME, userType);
         }

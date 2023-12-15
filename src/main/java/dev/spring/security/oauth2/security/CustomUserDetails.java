@@ -15,14 +15,14 @@ import java.util.Collections;
 @Builder
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    @Getter private final Long id;
+    @Getter private final String socialId;
     @Getter private final EUserType userType;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public static CustomUserDetails create(UserRepository.UserSecurityForm form) {
         return CustomUserDetails.builder()
-                .id(form.getId())
+                .socialId(form.getId())
                 .userType(form.getUserType())
                 .password(form.getPassword())
                 .authorities(Collections.singleton(new SimpleGrantedAuthority(form.getUserType().getAuthority())))
@@ -41,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id.toString();
+        return socialId;
     }
 
     @Override

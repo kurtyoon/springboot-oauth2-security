@@ -2,8 +2,8 @@ package dev.spring.security.oauth2.security.filter;
 
 import dev.spring.security.oauth2.constant.Constants;
 import dev.spring.security.oauth2.security.CustomUserDetails;
+import dev.spring.security.oauth2.security.jwt.JwtProvider;
 import dev.spring.security.oauth2.security.service.CustomUserDetailsService;
-import dev.spring.security.oauth2.utility.HeaderUtil;
 import dev.spring.security.oauth2.utility.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,28 +27,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = HeaderUtil.refineHeader(request, Constants.AUTHORIZATION, Constants.BEARER_PREFIX)
-                .orElseThrow(() -> new IllegalArgumentException("헤더에 토큰이 존재하지 않습니다."));
+        String token = JwtProvider.resolveToken(request);
         Claims claims = jwtUtil.validateToken(token);
+        String socialId = claims.get(Constants.SOCIAL_ID_CLAIM_NAME).toString();
 
-        CustomUserDetails userDetails = (CustomUserDetails) customUserDetailsService.loadUserById(
-                claims.get(Constants.USER_ID_CLAIM_NAME, Long.class)
-        );
+        CustomUserDetails userDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(socialId);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities()
         );
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authenticationToken);
-        SecurityContextHolder.setContext(context);
-
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
        return Constants.NO_AUTH_WHITE_LABEL.contains(request.getRequestURI()) || request.getRequestURI().startsWith("/guest");
     }
 }
