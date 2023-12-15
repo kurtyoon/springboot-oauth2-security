@@ -1,7 +1,7 @@
 package dev.spring.security.oauth2.config;
 
-import dev.spring.security.oauth2.inteceptor.UserIdArgumentResolver;
-import dev.spring.security.oauth2.inteceptor.UserIdInterceptor;
+import dev.spring.security.oauth2.inteceptor.SocialIdArgumentResolver;
+import dev.spring.security.oauth2.inteceptor.SocialIdInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -15,18 +15,18 @@ import java.util.List;
 @EnableWebMvc
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final UserIdArgumentResolver userIdArgumentResolver;
+    private final SocialIdArgumentResolver socialIdArgumentResolver;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
-        resolvers.add(userIdArgumentResolver);
+        resolvers.add(socialIdArgumentResolver);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserIdInterceptor())
-                .addPathPatterns("/api/v1/**")
-                .excludePathPatterns("/api/v1/health");
+        registry.addInterceptor(new SocialIdInterceptor())
+                .addPathPatterns("/api/**")
+                .excludePathPatterns("/api/health");
     }
 }
