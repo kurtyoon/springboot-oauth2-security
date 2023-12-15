@@ -6,7 +6,6 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.InternetAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -57,19 +56,18 @@ public class EmailService {
 
     private String getContent() {
         String content = "";
-        content += "<div style='width: 500px; height: 500px; border: 1px solid black;'>";
-        content += "<h1 style='text-align: center;'>회원가입 인증 코드</h1>";
-        content += "<p>";
-        content += "안녕하세요. 회원가입을 위해 인증코드를 입력해주세요.<br>";
-        content += "아래의 인증코드를 입력하시면 회원가입이 완료됩니다.<br>";
-        content += "감사합니다.";
+        content += "<div style='width: 500px; height: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); border-radius: 10px;'>";
+        content += "<h1 style='text-align: center; color: #333;'>회원가입 인증 코드</h1>";
+        content += "<p style='text-align: center; color: #555;'>";
+        content += "<br>안녕하세요. 회원가입을 위해 아래 인증코드를 입력해주세요.<br>";
+        content += "인증코드를 입력하시면 회원가입이 완료됩니다.<br><br>";
         content += "</p>";
-        content += "<div style='text-align: center;'>";
-        content += "<h3>" + code + "</h3>";
+        content += "<div style='text-align: center; margin: 20px;'>";
+        content += "<span style='font-size: 1.5em; color: #333; background-color: #f7f7f7; padding: 10px; border: 1px solid #ddd; border-radius: 5px;'>" + code + "</span>";
+        content += "</div>";
         content += "</div>";
         return content;
     }
-
 
     private String createCode() {
         StringBuilder code = new StringBuilder();
