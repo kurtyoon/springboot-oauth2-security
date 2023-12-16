@@ -16,12 +16,12 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.error("JwtExceptionFilter");
-        request.setAttribute("exception", ErrorCode.INTERNAL_SERVER_ERROR);
+        request.setAttribute("exception", ErrorCode.UNAUTHORIZED_ERROR);
         filterChain.doFilter(request, response);
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         return Constants.NO_AUTH_WHITE_LABEL.contains(request.getRequestURI()) || request.getRequestURI().startsWith("/guest");
     }
 }

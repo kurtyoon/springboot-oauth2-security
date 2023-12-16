@@ -7,14 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ELoginProvider {
     DEFAULT("DEFAULT"),
-    GOOGLE("GOOGLE"),
-    NAVER("NAVER"),
-    KAKAO("KAKAO"),
-    FACEBOOK("FACEBOOK"),
-    TWITTER("TWITTER"),
-    GITHUB("GITHUB"),
-    LINE("LINE"),
-    APPLE("APPLE");
+    GOOGLE("GOOGLE");
 
     private final String name;
 
